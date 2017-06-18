@@ -55,6 +55,7 @@ class MainViewController: NSViewController {
             guard let content = MCHelper.shared.handleMarkdownFile(filePath: filePath) else {
                 return
             }
+            print("content: \n\(content)")
             let panel = NSSavePanel()
             panel.canCreateDirectories = true
             panel.canSelectHiddenExtension = false
@@ -71,9 +72,9 @@ class MainViewController: NSViewController {
                         print("保存文件失败！！！")
                     }
                 }
-                self.dragView.progress = 0
                 self.addFileButton.isEnabled = true
             }
+            self.dragView.progress = 0
         }
     }
 

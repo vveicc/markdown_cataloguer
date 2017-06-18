@@ -24,11 +24,22 @@ final class MCHelper: NSObject {
     var catalogStartLevel = 2
     var startLevelTitleRow = 0
     
+    func initParameters() {
+        original.removeAll()
+        titles.removeAll()
+        subtitles.removeAll()
+        
+        catalogStartRow = 0
+        catalogStartLevel = 2
+        startLevelTitleRow = 0
+    }
+    
     func handleMarkdownFile(filePath: String) -> String? {
         guard let content = try? String(contentsOfFile: filePath) else {
             print("读取文件失败！！！")
             return nil
         }
+        initParameters()
         original = content.components(separatedBy: CharacterSet.newlines)
         
         var isCode = false
@@ -44,7 +55,7 @@ final class MCHelper: NSObject {
         
         configCatalog()
         
-        if catalogStartLevel < startLevelTitleRow {
+        if catalogStartRow <= startLevelTitleRow {
             generateCatalog()
         }
         return original.reduce("", { (content, line) -> String in
@@ -53,14 +64,14 @@ final class MCHelper: NSObject {
     }
     
     func generateCatalog() {
-        let catalog = subtitles.reduce("\n\n\n# 目录\n\n") { (catalog, title) -> String in
+        let catalog = subtitles.reduce((catalogStartRow == 0 ? "" : "\n\n\n") + "# 目录\n") { (catalog, title) -> String in
             catalog + (title.level == catalogStartLevel ? "\n" : "")
                 + String(repeating: " ", count: title.level == catalogStartLevel ? 0 : ((title.level - catalogStartLevel) * 3 - 1))
                 + "- [" + title.title + "]"
                 + "(" + generateTitleUrl(title: title.title) + ")"
                 + "\n"
         }
-        original[(catalogStartLevel + 1)..<startLevelTitleRow] = [catalog + "\n\n"]
+        original[catalogStartRow..<startLevelTitleRow] = [catalog + "\n\n"]
     }
     
     func generateTitleUrl(title: String) -> String {
@@ -82,6 +93,7 @@ final class MCHelper: NSObject {
         if doctitles.count > 0 { catalogStartRow = doctitles.last!.row + 1 }
         subtitles = Array(titles.filter { $0.level >= catalogStartLevel })
         if subtitles.count > 0 { startLevelTitleRow = subtitles.first!.row }
+        print("catalogStartRow: \(catalogStartRow), startLevelTitleRow: \(startLevelTitleRow)")
     }
     
     func handleTitle(title: String) -> (Int, String)? {

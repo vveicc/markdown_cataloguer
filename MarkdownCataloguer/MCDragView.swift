@@ -57,10 +57,10 @@ class MCDragView: NSView {
         if let _ = addFileButtonFrame {
             NSColor(hexColorString: "278CFB")!.set()
             let arcPath = NSBezierPath()
-            arcPath.lineWidth = 1.8
+            arcPath.lineWidth = 1.6
             arcPath.lineCapStyle = .roundLineCapStyle
             arcPath.lineJoinStyle = .roundLineJoinStyle
-            arcPath.appendArc(withCenter: addFileButtonCenter!, radius: addFileButtonWidth! / 2 + 3.2, startAngle: 90, endAngle: -360 * progress / 100 + 90, clockwise: true)
+            arcPath.appendArc(withCenter: addFileButtonCenter!, radius: addFileButtonWidth! / 2 + 3.4, startAngle: 90, endAngle: -360 * progress / 100 + 90, clockwise: true)
             arcPath.stroke()
         }
     }
