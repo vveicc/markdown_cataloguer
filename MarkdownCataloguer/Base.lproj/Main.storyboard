@@ -707,9 +707,9 @@
                                         </connections>
                                     </button>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZrY-4p-qng">
-                                        <rect key="frame" x="56" y="74" width="145" height="19"/>
+                                        <rect key="frame" x="51" y="71" width="154" height="19"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="拖入 Markdown 文件" id="VL6-rZ-rHR">
-                                            <font key="font" metaFont="system" size="15"/>
+                                            <font key="font" metaFont="system" size="16"/>
                                             <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="0.84999999999999998" colorSpace="calibratedRGB"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
@@ -717,7 +717,7 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="CCN-wC-uwF" firstAttribute="centerX" secondItem="guv-cV-4jr" secondAttribute="centerX" id="1UH-hp-a6Y"/>
-                                    <constraint firstItem="ZrY-4p-qng" firstAttribute="centerY" secondItem="guv-cV-4jr" secondAttribute="centerY" multiplier="1.48" id="7hD-O3-hJB"/>
+                                    <constraint firstItem="ZrY-4p-qng" firstAttribute="centerY" secondItem="guv-cV-4jr" secondAttribute="centerY" multiplier="1.5" id="7hD-O3-hJB"/>
                                     <constraint firstItem="ZrY-4p-qng" firstAttribute="centerX" secondItem="guv-cV-4jr" secondAttribute="centerX" id="ZHg-kZ-xv1"/>
                                     <constraint firstItem="CCN-wC-uwF" firstAttribute="width" secondItem="guv-cV-4jr" secondAttribute="width" multiplier="0.27" id="ZbR-Wu-7NY"/>
                                     <constraint firstItem="CCN-wC-uwF" firstAttribute="centerY" secondItem="guv-cV-4jr" secondAttribute="centerY" multiplier="0.81" id="fvj-HM-j4T"/>
@@ -732,6 +732,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="addFileButton" destination="CCN-wC-uwF" id="vzD-xh-fxe"/>
                         <outlet property="dragView" destination="guv-cV-4jr" id="A2V-Qn-s3d"/>
                     </connections>
                 </viewController>

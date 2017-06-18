@@ -11,6 +11,7 @@ import Cocoa
 class MainViewController: NSViewController {
     
     @IBOutlet weak var dragView: MCDragView!
+    @IBOutlet weak var addFileButton: MCButton!
     
     
     override func viewDidLoad() {
@@ -19,6 +20,12 @@ class MainViewController: NSViewController {
         dragView.receiveFile = { filePath in
             self.handleAndSaveFile(filePath: filePath)
         }
+    }
+    
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        
+        dragView.addFileButtonFrame = addFileButton.frame
     }
 
     @IBAction func addFileButtonAction(_ sender: MCButton) {
@@ -37,7 +44,14 @@ class MainViewController: NSViewController {
     }
     
     func handleAndSaveFile(filePath: String) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.6) { 
+        addFileButton.isEnabled = false
+        Timer.scheduledTimer(withTimeInterval: 0.02, repeats: true) { (timer: Timer) in
+            self.dragView.progress += 2
+            if self.dragView.progress == 100 {
+                timer.invalidate()
+            }
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.05) {
             guard let content = MCHelper.shared.handleMarkdownFile(filePath: filePath) else {
                 return
             }
@@ -57,6 +71,8 @@ class MainViewController: NSViewController {
                         print("保存文件失败！！！")
                     }
                 }
+                self.dragView.progress = 0
+                self.addFileButton.isEnabled = true
             }
         }
     }

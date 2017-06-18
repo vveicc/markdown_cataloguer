@@ -13,6 +13,28 @@ class MCDragView: NSView {
     var hasDragIn: Bool = false
     var receiveFile: ((_ filePath: String) -> ())?
     
+    var addFileButtonWidth: CGFloat?
+    var addFileButtonCenter: NSPoint?
+    var addFileButtonFrame: NSRect? {
+        
+        didSet {
+            if let buttonFrame = addFileButtonFrame {
+                addFileButtonWidth = buttonFrame.size.width
+                addFileButtonCenter = NSPoint(x: buttonFrame.origin.x + addFileButtonWidth! / 2, y: buttonFrame.origin.y + addFileButtonWidth! / 2)
+            }
+        }
+    }
+    
+    var progress: CGFloat = 0 {
+        
+        didSet {
+            if progress < 0 || progress > 100 {
+                progress = 0
+            }
+            needsDisplay = true
+        }
+    }
+    
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -31,6 +53,16 @@ class MCDragView: NSView {
         let path = NSBezierPath()
         path.appendRect(dirtyRect)
         path.fill()
+        
+        if let _ = addFileButtonFrame {
+            NSColor(hexColorString: "278CFB")!.set()
+            let arcPath = NSBezierPath()
+            arcPath.lineWidth = 1.8
+            arcPath.lineCapStyle = .roundLineCapStyle
+            arcPath.lineJoinStyle = .roundLineJoinStyle
+            arcPath.appendArc(withCenter: addFileButtonCenter!, radius: addFileButtonWidth! / 2 + 3.2, startAngle: 90, endAngle: -360 * progress / 100 + 90, clockwise: true)
+            arcPath.stroke()
+        }
     }
     
     // MARK: - NSDraggingDestination
